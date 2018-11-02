@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_margin"
+    android:orientation="vertical"
+    tools:context=".ProductDetailsActivity">
+
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="@color/colorAccent"
+        android:src="@drawable/outline_photo_black_36" />
+
+    <TextView
+        style="@style/text_style"
+        android:id="@+id/product_name"
+        android:text="Name"/>
+
+    <TextView
+        style="@style/text_style"
+        android:id="@+id/product_price"
+        android:text="Price"/>
+
+    <TextView
+        style="@style/text_style"
+        android:id="@+id/product_quantity"
+        android:text="Quantity" />
+
+    <TextView
+        style="@style/text_style"
+        android:id="@+id/product_supplier"
+        android:text="Supplier" />
+
+    <TextView
+        style="@style/text_style"
+        android:id="@+id/product_supplier_contact"
+        android:text="Supplier Contact" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            style="@style/button_style"
+            android:id="@+id/increase_button"
+            android:text="Increase Quantity" />
+
+        <Button
+            style="@style/button_style"
+            android:id="@+id/decrease_button"
+            android:text="Decrease Quantity" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            style="@style/button_style"
+            android:id="@+id/edit_button"
+            android:text="Edit Product Info" />
+
+        <Button
+            style="@style/button_style"
+            android:id="@+id/call_button"
+            android:text="Call Supplier" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Product Entry!"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:layout_gravity="center"/>
+</LinearLayout>
