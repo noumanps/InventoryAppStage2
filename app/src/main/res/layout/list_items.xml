@@ -9,6 +9,7 @@
         android:id="@+id/image"
         android:layout_width="@dimen/list_item_height"
         android:layout_height="@dimen/list_item_height"
+        android:scaleType="fitXY"
         android:background="@color/colorAccent"
         android:src="@drawable/outline_photo_black_48" />
 

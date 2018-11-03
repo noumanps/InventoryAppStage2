@@ -149,7 +149,7 @@ public class ProductProvider extends ContentProvider {
 
         // Check that the supplier contact is not null
         String supplierContact = values.getAsString(ProductEntry.COLUMN_PRODUCT_SUPPLIER_CONTACT);
-        if (supplier == null) {
+        if (supplierContact == null) {
             throw new IllegalArgumentException("Product requires the Supplier's Contact Number");
         }
 

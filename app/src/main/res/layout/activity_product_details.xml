@@ -11,6 +11,7 @@
         android:id="@+id/product_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:scaleType="fitXY"
         android:layout_gravity="center"
         android:background="@color/colorAccent"
         android:src="@drawable/outline_photo_black_36" />

@@ -59,12 +59,14 @@
 
     <string name="product_addition_fail">Product Addition Fail</string>
 
-    <string name="product_update_success">Product Update Success</string>
+    <string name="product_name_require">Product Name Required</string>
 
-    <string name="product_update_fail">Product Update Fail</string>
+    <string name="product_price_require">Product Price Required</string>
 
-    <string name="product_delete_success">Product Delete Success</string>
+    <string name="product_quantity_require">Product Quantity Required</string>
 
-    <string name="product_delete_fail">Product Delete Fail</string>
+    <string name="product_supplier_require">Product Supplier Name Required</string>
+
+    <string name="product_supplier_contact_require">Product Supplier Contact Required</string>
 
 </resources>

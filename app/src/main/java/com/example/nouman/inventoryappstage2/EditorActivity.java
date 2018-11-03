@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
@@ -103,6 +104,18 @@ public class EditorActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
+        final TextInputLayout nameWrapper = findViewById(R.id.nameWrapper);
+        final TextInputLayout priceWrapper = findViewById(R.id.priceWrapper);
+        final TextInputLayout quantityWrapper = findViewById(R.id.quantityWrapper);
+        final TextInputLayout supplierWrapper = findViewById(R.id.supplierWrapper);
+        final TextInputLayout supplierContactWrapper = findViewById(R.id.supplierContactWrapper);
+
+        nameWrapper.setHint(getString(R.string.product_name));
+        priceWrapper.setHint(getString(R.string.product_price));
+        quantityWrapper.setHint(getString(R.string.product_quantity));
+        supplierWrapper.setHint(getString(R.string.product_supplier));
+        supplierContactWrapper.setHint(getString(R.string.product_supplier_contact));
+
         // Examine the intent that was used to launch this activity,
         // in order to figure out if we're creating a new product or editing an existing one.
         Intent intent = getIntent();
@@ -154,6 +167,7 @@ public class EditorActivity extends AppCompatActivity implements
         mProductImage.setOnTouchListener(mTouchListener);
 
     }
+
     /**
      * Get user input from editor and save product into database.
      */
@@ -165,35 +179,54 @@ public class EditorActivity extends AppCompatActivity implements
         String quantityString = mQuantityEditText.getText().toString().trim();
         String supplierString = mSupplierEditText.getText().toString().trim();
         String supplierContactString = mSupplierContactEditText.getText().toString().trim();
-        String imageString = mImageUri.toString();
+        //String imageString = mImageUri.toString();
 
-        // Check if this is supposed to be a new product
-        // and check if all the fields in the editor are blank
-        if (mCurrentProductUri == null && mImageUri == null &&
-                TextUtils.isEmpty(nameString) && TextUtils.isEmpty(priceString) &&
-                TextUtils.isEmpty(quantityString) && TextUtils.isEmpty(supplierString)) {
-            // Since no fields were modified, we can return early without creating a new product.
-            // No need to create ContentValues and no need to do any ContentProvider operations.
-            return;
-        }
-        // Create a ContentValues object where column names are the keys,
-        // and product attributes from the editor are the values.
-        ContentValues values = new ContentValues();
-        values.put(ProductEntry.COLUMN_PRODUCT_NAME, nameString);
-        int price = Integer.parseInt(priceString);
-        values.put(ProductEntry.COLUMN_PRODUCT_PRICE, price);
-        int quantity = Integer.parseInt(quantityString);
-        values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, quantity);
-        values.put(ProductEntry.COLUMN_PRODUCT_SUPPLIER_NAME, supplierString);
-        values.put(ProductEntry.COLUMN_PRODUCT_SUPPLIER_CONTACT, supplierContactString);
-        values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, imageString);
 
         // Determine if this is a new or existing product by checking if mCurrentProductUri is null or not
         if (mCurrentProductUri == null) {
+
+            if (TextUtils.isEmpty(nameString)) {
+                Toast.makeText(this, getString(R.string.product_name_require), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(priceString)) {
+                Toast.makeText(this, getString(R.string.product_price_require), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(quantityString)) {
+                Toast.makeText(this, getString(R.string.product_quantity_require), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(supplierString)) {
+                Toast.makeText(this, getString(R.string.product_supplier_require), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(supplierContactString)) {
+                Toast.makeText(this, getString(R.string.product_supplier_contact_require), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            // Create a ContentValues object where column names are the keys,
+            // and product attributes from the editor are the values.
+            ContentValues values = new ContentValues();
+
+            values.put(ProductEntry.COLUMN_PRODUCT_NAME, nameString);
+            int price = Integer.parseInt(priceString);
+            values.put(ProductEntry.COLUMN_PRODUCT_PRICE, price);
+            int quantity = Integer.parseInt(quantityString);
+            values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, quantity);
+            values.put(ProductEntry.COLUMN_PRODUCT_SUPPLIER_NAME, supplierString);
+            values.put(ProductEntry.COLUMN_PRODUCT_SUPPLIER_CONTACT, supplierContactString);
+            String imageString = mImageUri.toString();
+            values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, imageString);
+
             // This is a NEW product, so insert a new product into the provider,
             // returning the content URI for the new product.
-            Uri newUri;
-            newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
+            Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
 
             // Show a toast message depending on whether or not the insertion was successful.
             if (newUri == null) {
@@ -204,12 +237,51 @@ public class EditorActivity extends AppCompatActivity implements
                 // Otherwise, the insertion was successful and we can display a toast.
                 Toast.makeText(this, getString(R.string.editor_insert_product_successful),
                         Toast.LENGTH_SHORT).show();
+                finish();
             }
         } else {
             // Otherwise this is an EXISTING product, so update the product with content URI: mCurrentProductUri
             // and pass in the new ContentValues. Pass in null for the selection and selection args
             // because mCurrentProductUri will already identify the correct row in the database that
             // we want to modify.
+            if (TextUtils.isEmpty(nameString)) {
+                Toast.makeText(this, getString(R.string.product_name_require), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(priceString)) {
+                Toast.makeText(this, getString(R.string.product_price_require), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(quantityString)) {
+                Toast.makeText(this, getString(R.string.product_quantity_require), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(supplierString)) {
+                Toast.makeText(this, getString(R.string.product_supplier_require), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(supplierContactString)) {
+                Toast.makeText(this, getString(R.string.product_supplier_contact_require), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            // Create a ContentValues object where column names are the keys,
+            // and product attributes from the editor are the values.
+            ContentValues values = new ContentValues();
+
+            values.put(ProductEntry.COLUMN_PRODUCT_NAME, nameString);
+            int price = Integer.parseInt(priceString);
+            values.put(ProductEntry.COLUMN_PRODUCT_PRICE, price);
+            int quantity = Integer.parseInt(quantityString);
+            values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, quantity);
+            values.put(ProductEntry.COLUMN_PRODUCT_SUPPLIER_NAME, supplierString);
+            values.put(ProductEntry.COLUMN_PRODUCT_SUPPLIER_CONTACT, supplierContactString);
+            values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, mImageUri.toString());
+
             int rowsAffected = getContentResolver().update(mCurrentProductUri, values, null, null);
 
             // Show a toast message depending on whether or not the update was successful.
@@ -221,6 +293,7 @@ public class EditorActivity extends AppCompatActivity implements
                 // Otherwise, the update was successful and we can display a toast.
                 Toast.makeText(this, getString(R.string.editor_update_product_successful),
                         Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     }
@@ -257,7 +330,6 @@ public class EditorActivity extends AppCompatActivity implements
                 // Save product to database
                 saveProduct();
                 // Exit activity
-                finish();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:

@@ -24,7 +24,6 @@ public class ProductDetailsActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private Uri mCurrentProductUri;
-    private Uri mImageUri;
     private ImageView mCurrentImage;
     private TextView mCurrentName;
     private TextView mCurrentPrice;
@@ -79,7 +78,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements
                 String number = "tel:" + supplierContact;
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse(number));
-                startActivity(intent);
+                //Verify that the intent will resolve to at least one activity
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
             }
         });
 
@@ -157,7 +159,6 @@ public class ProductDetailsActivity extends AppCompatActivity implements
             mCurrentSupplier.setText("Product Supplier: " + supplier);
             mCurrentSupplierContact.setText("Supplier Contact: " + supplierContact);
             mCurrentImage.setImageURI(Uri.parse(image));
-            mImageUri = Uri.parse(image);
         }
     }
 
